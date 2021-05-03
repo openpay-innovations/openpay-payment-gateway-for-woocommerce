@@ -1,1 +1,1 @@
-# woocommerce-payment-plugin
+# Openpay #
