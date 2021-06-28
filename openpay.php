@@ -45,13 +45,14 @@ if (!class_exists('Openpay_Payment')) {
                     )
                 ); 
             });
-            add_action( 'get_footer', array($gateway, 'custom_css_from_openpay' ),10 , 2 );
             add_action( 'openpay_do_cron_jobs', array('Openpay_Plugin_Cron', 'fire_jobs'), 10, 0 );
             //This is for checking cron job on saving openpay settings
             //add_action( "woocommerce_update_options_payment_gateways_{$gateway->id}", array('Openpay_Plugin_Cron', 'fire_jobs'), 12, 0 );
             add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array($this, 'filter_action_links'), 10, 1 );
             add_filter( 'cron_schedules', array('Openpay_Plugin_Cron', 'edit_cron_schedules'), 10, 1 );
             
+            // adding openpay icon
+            add_filter( 'woocommerce_gateway_icon',array($gateway,'openpay_gateway_icon'), 10, 2);
         }
 
         public static function load_classes()
@@ -90,18 +91,17 @@ if (!class_exists('Openpay_Payment')) {
             WC_Gateway_Openpay::getInstance()->removeConfiguration();
 			Openpay_Plugin_Cron::delete_jobs();
 		}
-
-		public function filter_action_links($links)
+        
+        public function filter_action_links($links)
 		{
 			$additional_links = array(
 				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc-gateway-openpay' ) . '">' . __( 'Settings', 'woo_openpay' ) . '</a>',
 			);
-
 			return array_merge($additional_links, $links);
 		}
     }
 
     register_activation_hook( __FILE__, array('Openpay_Payment',  'activate_plugin' ) );
     register_deactivation_hook( __FILE__, array('Openpay_Payment', 'deactivate_plugin') );
-    add_action( 'plugins_loaded', array('Openpay_Payment', 'init'), 10, 0 );
+    add_action( 'plugins_loaded', array('Openpay_Payment', 'init'), 10, 0 );  
 }

@@ -6,9 +6,11 @@ $this->form_fields = array(
         'type'    => 'select',
         'label'   => __( 'Active', 'wc-gateway-openpay' ),
         'options' => array(
-            'yes'  => __("Yes"),
             'no'  => __("No"),
+            'yes'  => __("Yes"),
+
         ),
+        'default'     => __( 'options', 'No' ),
     ),
     'title'          => array(
         'title'       => __( 'Title', 'wc-gateway-openpay' ),
@@ -44,7 +46,7 @@ $this->form_fields = array(
     ),
     'auth_token'          => array(
         'title'       => __( 'Openpay Password', 'wc-gateway-openpay' ),
-        'type'        => 'password'
+        'type'        => 'text'
     ),
     'minimum'          => array(
         'title'       => __( 'Minimum Checkout Value', 'wc-gateway-openpay' ),

@@ -64,7 +64,8 @@ class IntegrationApiModelsCommandsOnlineJourneyDetails implements ModelInterface
 'charge_back_count' => 'int',
 'customer_quality' => 'int',
 'customer_details' => '\Openpay\Client\Model\IntegrationApiModelsCommandsPersonalDetails',
-'delivery_date' => 'string'    ];
+'delivery_date' => 'string',    
+'delivery_method' => 'string'       ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -79,7 +80,8 @@ class IntegrationApiModelsCommandsOnlineJourneyDetails implements ModelInterface
 'charge_back_count' => 'int32',
 'customer_quality' => 'int32',
 'customer_details' => null,
-'delivery_date' => null    ];
+'delivery_date' => null,
+'delivery_method' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -115,7 +117,8 @@ class IntegrationApiModelsCommandsOnlineJourneyDetails implements ModelInterface
 'charge_back_count' => 'chargeBackCount',
 'customer_quality' => 'customerQuality',
 'customer_details' => 'customerDetails',
-'delivery_date' => 'deliveryDate'    ];
+'delivery_date' => 'deliveryDate',    
+'delivery_method' => 'deliveryMethod'        ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -130,7 +133,8 @@ class IntegrationApiModelsCommandsOnlineJourneyDetails implements ModelInterface
 'charge_back_count' => 'setChargeBackCount',
 'customer_quality' => 'setCustomerQuality',
 'customer_details' => 'setCustomerDetails',
-'delivery_date' => 'setDeliveryDate'    ];
+'delivery_date' => 'setDeliveryDate',
+'delivery_method' => 'setDeliveryMethod'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -145,7 +149,8 @@ class IntegrationApiModelsCommandsOnlineJourneyDetails implements ModelInterface
 'charge_back_count' => 'getChargeBackCount',
 'customer_quality' => 'getCustomerQuality',
 'customer_details' => 'getCustomerDetails',
-'delivery_date' => 'getDeliveryDate'    ];
+'delivery_date' => 'getDeliveryDate',
+'delivery_method' => 'getDeliveryMethod'        ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -213,6 +218,7 @@ class IntegrationApiModelsCommandsOnlineJourneyDetails implements ModelInterface
         $this->container['customer_quality'] = isset($data['customer_quality']) ? $data['customer_quality'] : null;
         $this->container['customer_details'] = isset($data['customer_details']) ? $data['customer_details'] : null;
         $this->container['delivery_date'] = isset($data['delivery_date']) ? $data['delivery_date'] : null;
+        $this->container['delivery_method'] = isset($data['delivery_method']) ? $data['delivery_method'] : null;
     }
 
     /**
@@ -445,6 +451,31 @@ class IntegrationApiModelsCommandsOnlineJourneyDetails implements ModelInterface
 
         return $this;
     }
+    
+    /**
+     * Gets delivery_method
+     *
+     * @return string
+     */
+    public function getDeliveryMethod()
+    {
+        return $this->container['delivery_method'];
+    }
+
+    /**
+     * Sets delivery_method
+     *
+     * @param string $delivery_method The method for which the delivery is scheduled
+     *
+     * @return $this
+     */
+    public function setDeliveryMethod($delivery_method)
+    {
+        $this->container['delivery_method'] = $delivery_method;
+
+        return $this;
+    }
+    
     /**
      * Returns true if offset exists. False otherwise.
      *

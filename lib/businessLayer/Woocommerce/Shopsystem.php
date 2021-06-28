@@ -64,8 +64,9 @@ class Shopsystem
             'address'   => $cartObj->get_customer()->get_billing_address(),
             'street' => $cartObj->get_customer()->get_billing_address(),
             'line2' => $cartObj->get_customer()->get_billing_address_2(),
+            'telephone' => $cartObj->get_customer()->get_billing_phone(),
         );
-        $shopCart->source = 'Woocommerce';    
+        $shopCart->source = 'Woocommerce'; 
         return $shopCart;
     }
 }

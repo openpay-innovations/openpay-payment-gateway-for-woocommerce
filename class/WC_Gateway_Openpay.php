@@ -10,11 +10,11 @@ if (!class_exists('WC_Gateway_Openpay')) {
         public function __construct()
         {
             $this->include_path			= dirname(__FILE__) . '/WC_Gateway_Openpay';
-            $this->id					= 'wc-gateway-openpay';
-            $logo_url = 'https://static.openpay.com.au/brand/logo/amber-lozenge-logo.svg';
-			$this->icon = apply_filters( 'woocommerce_openpay_icon', $logo_url );
+            $this->id					= 'wc-gateway-openpay';         
 			$this->description =  $this->get_option( 'description' );
             $this->title = $this->get_option( 'title' );
+            $this->method_title = "Openpay";
+            $this->method_description = " ";
             $this->enabled = $this->get_option( 'enabled' );
 			$this->max_amount = $this->get_option( 'maximum' );
 			$this->min_amount = $this->get_option( 'minimum' );
@@ -57,6 +57,10 @@ if (!class_exists('WC_Gateway_Openpay')) {
         {
             global $woocommerce;
             $data = $checkout->get_posted_data();
+			$payment_method = $data['payment_method'];
+			if ( $payment_method != 'wc-gateway-openpay' ) {
+				return;
+			}
             $post_id = wp_insert_post( array(
 				'post_content' => 'Redirecting to Openpay to complete payment...',
 				'post_title' => 'Openpay Order',
@@ -166,7 +170,8 @@ if (!class_exists('WC_Gateway_Openpay')) {
 					} catch ( \Exception $e ) {
 						$this->log->add( 'openpay', $e->getMessage() );
 					}
-					$totalFromCart = $this->special_decode(get_post_meta( $post_id, 'total', true ));
+					//$totalFromCart = $this->special_decode(get_post_meta( $post_id, 'total', true ));
+					$totalFromCart = WC()->cart->total;
 					if ( (int)($totalFromCart * 100) == $purchasePrice ) {
 						$table_name = $wpdb->prefix . 'openpay';
 						$order = $this->create_wc_order_from_openpay( $post_id );
@@ -399,9 +404,18 @@ if (!class_exists('WC_Gateway_Openpay')) {
 				}
 				$this->log->add( 'openpay', 'Updated min/max successfully!!' );		
 			} catch ( \Exception $e ) {
+				$this->update_option( 'auth_user' , $_POST['auth_user'] );
+				$this->update_option( 'auth_token' , $_POST['auth_token'] );
+				$this->update_option( 'payment_mode' , $_POST['payment_mode'] );
+				$this->update_option( 'region' , $_POST['region'] );
 				$result = [
-					'success' => false
+					'success' => false,
+					'auth_user' => $this->get_option( 'auth_user' ),
+					'auth_token' => $this->get_option( 'auth_token' ),
+					'payment_mode' => $this->get_option( 'payment_mode' ),
+					'region' => $this->get_option( 'region' ),
 				];
+				wp_send_json($result);
 				$this->log->add( 'openpay', $e->getMessage() );
 			}
 		}
@@ -473,11 +487,6 @@ if (!class_exists('WC_Gateway_Openpay')) {
 			return $_terms_options;
 		}
 
-		function custom_css_from_openpay()
-		{
-			wp_enqueue_style( 'openpay_css',  plugin_dir_url( __FILE__ ).'css/openpay.css' );
-		}
-
 		function getcategories() 
         {   
             $taxonomy     = 'product_cat';
@@ -544,19 +553,18 @@ if (!class_exists('WC_Gateway_Openpay')) {
 
 		public function removeConfiguration()
 		{
-			delete_option( 'title' );
-			delete_option( 'enabled' );
-			delete_option( 'description' );
-			delete_option( 'payment_mode' );
-			delete_option( 'region' );
-			delete_option( 'auth_user' );
-			delete_option( 'auth_token' );
-			delete_option( 'minimum' );
-			delete_option( 'maximum' );
-			delete_option( 'job_frequency' );
-			delete_option( '0' );
-			delete_option( 'disable_products' );
+			delete_option('woocommerce_wc-gateway-openpay_settings');
 			return;
+		}
+
+		public function openpay_gateway_icon( $icon, $id ) 
+		{
+			if ( $id === 'wc-gateway-openpay' ) {
+				return '<img src="https://static.openpay.com.au/brand/logo/amber-lozenge-logo.svg" 
+				alt="Openpay Logo" style="height:100px;"/>'; 
+			} else {
+				return $icon;
+			}
 		}
 	}
 }
