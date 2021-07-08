@@ -53,6 +53,7 @@ if (!class_exists('Openpay_Payment')) {
             
             // adding openpay icon
             add_filter( 'woocommerce_gateway_icon',array($gateway,'openpay_gateway_icon'), 10, 2);
+            add_action( 'admin_head', array($gateway, 'hide_wc_refund_button'), 10, 2 );
         }
 
         public static function load_classes()

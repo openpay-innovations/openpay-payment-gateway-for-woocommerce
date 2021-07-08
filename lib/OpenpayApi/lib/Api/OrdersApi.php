@@ -91,14 +91,15 @@ class OrdersApi
      *
      * Gets the configured minimum and maximum purchase price for orders with the authenticated retailer
      *
+     * @param  string $origin origin (optional)
      *
      * @throws \Openpay\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Openpay\Client\Model\IntegrationApiModelsLimits
      */
-    public function ordersLimitsGet()
+    public function ordersLimitsGet($origin = null)
     {
-        list($response) = $this->ordersLimitsGetWithHttpInfo();
+        list($response) = $this->ordersLimitsGetWithHttpInfo($origin);
         return $response;
     }
 
@@ -107,15 +108,16 @@ class OrdersApi
      *
      * Gets the configured minimum and maximum purchase price for orders with the authenticated retailer
      *
+     * @param  string $origin (optional)
      *
      * @throws \Openpay\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Openpay\Client\Model\IntegrationApiModelsLimits, HTTP status code, HTTP response headers (array of strings)
      */
-    public function ordersLimitsGetWithHttpInfo()
+    public function ordersLimitsGetWithHttpInfo($origin = null)
     {
         $returnType = '\Openpay\Client\Model\IntegrationApiModelsLimits';
-        $request = $this->ordersLimitsGetRequest();
+        $request = $this->ordersLimitsGetRequest($origin);
 
         try {
             $options = $this->createHttpClientOption();
@@ -205,13 +207,14 @@ class OrdersApi
      *
      * Gets the configured minimum and maximum purchase price for orders with the authenticated retailer
      *
+     * @param  string $origin (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ordersLimitsGetAsync()
+    public function ordersLimitsGetAsync($origin = null)
     {
-        return $this->ordersLimitsGetAsyncWithHttpInfo()
+        return $this->ordersLimitsGetAsyncWithHttpInfo($origin)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -224,14 +227,15 @@ class OrdersApi
      *
      * Gets the configured minimum and maximum purchase price for orders with the authenticated retailer
      *
+     * @param  string $origin (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ordersLimitsGetAsyncWithHttpInfo()
+    public function ordersLimitsGetAsyncWithHttpInfo($origin = null)
     {
         $returnType = '\Openpay\Client\Model\IntegrationApiModelsLimits';
-        $request = $this->ordersLimitsGetRequest();
+        $request = $this->ordersLimitsGetRequest($origin);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -273,11 +277,12 @@ class OrdersApi
     /**
      * Create request for operation 'ordersLimitsGet'
      *
+     * @param  string $origin (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function ordersLimitsGetRequest()
+    protected function ordersLimitsGetRequest($origin = null)
     {
 
         $resourcePath = '/orders/limits';
@@ -287,7 +292,10 @@ class OrdersApi
         $httpBody = '';
         $multipart = false;
 
-
+        // query params
+        if ($origin !== null) {
+            $queryParams['origin'] = ObjectSerializer::toQueryValue($origin, null);
+        }
 
         // body params
         $_tempBody = null;
