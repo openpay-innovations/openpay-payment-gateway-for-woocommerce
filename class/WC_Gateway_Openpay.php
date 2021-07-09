@@ -207,7 +207,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
 					}
 
                 } else {
-                    wc_add_notice( __( 'Your order has been cancelled.', 'wc-gateway-openpay' ), 'notice' );
+                    wc_add_notice( __( 'Your order has been cancelled.', 'wc-gateway-openpay' ), 'error' );
 
                     //wp_delete_post( $post_id, true );
                     # Redirect back the the checkout.
@@ -373,6 +373,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
 				$max = $this->get_option( 'maximum' );
 
 				$paymentmanager = new BusinessLayer\Openpay\PaymentManager( $backofficeParams );
+                                $paymentmanager->setUrlAttributes(array('online'));
 				$config = $paymentmanager->getConfiguration();
 
 				// get values from openpay pay api
@@ -561,9 +562,47 @@ if (!class_exists('WC_Gateway_Openpay')) {
 		{
 			if ( $id === 'wc-gateway-openpay' ) {
 				return '<img src="https://static.openpay.com.au/brand/logo/amber-lozenge-logo.svg" 
-				alt="Openpay Logo" style="height:100px;"/>'; 
+				alt="Openpay Logo" style="width:80px;"/>'; 
 			} else {
 				return $icon;
+			}
+		}
+
+		public function hide_wc_refund_button()
+		{
+			global $post;
+			if (strpos($_SERVER['REQUEST_URI'], 'post.php?post=') === false) {
+				return;
+			}
+			if (empty($post) || $post->post_type != 'shop_order') {
+				return;
+			}
+			$order_id  = $_GET['post'];
+			$order = wc_get_order( $order_id );
+			$order_data = $order->get_data();
+			$payment_method = $order_data['payment_method'];
+			if ($payment_method == 'wc-gateway-openpay') {
+				$order_refunds = $order->get_refunds();
+				if ( $order_refunds ) {
+					$total_refunded = 0;
+					$order_total = $order_data['total'];
+					foreach( $order_refunds as $refund ) {
+						$total_refunded = $total_refunded + $refund->get_amount(); 
+					}
+					if ($order_total == $total_refunded) {
+						echo "<script>
+							jQuery(function () {
+								jQuery('.refund-items').hide();
+								jQuery('.order_actions option[value=send_email_customer_refunded_order]').remove();
+								if (jQuery('#original_post_status').val()=='wc-refunded') {
+									jQuery('#s2id_order_status').html('Refunded');
+								} else {
+									jQuery('#order_status option[value=wc-refunded]').remove();
+								}
+							});
+						</script>";
+					}
+				}
 			}
 		}
 	}
