@@ -175,13 +175,13 @@ if (!class_exists('WC_Gateway_Openpay')) {
 					if ( (int)($totalFromCart * 100) == $purchasePrice ) {
 						$table_name = $wpdb->prefix . 'openpay';
 						$order = $this->create_wc_order_from_openpay( $post_id );
-						$wpdb->insert( $table_name, array('plan_id' => $plan_id, 'order_id' => $order->id) );
+						$wpdb->insert( $table_name, array('plan_id' => $plan_id, 'order_id' => $order->get_id()) );
 
 						//payment capture
 						try {
 							$ids = [$plan_id];
 							$others = new stdClass();
-							$others->orderid = $order->id;
+							$others->orderid = $order->get_id();
 							$paymentmanager = new BusinessLayer\Openpay\PaymentManager( $backofficeParams );
 							$paymentmanager->setUrlAttributes($ids);
 							$paymentmanager->setShopdata(null, $others);
@@ -200,14 +200,14 @@ if (!class_exists('WC_Gateway_Openpay')) {
 							}
 						}
 					} else {
-						wc_add_notice( __( 'Cart price is different to Openpay plan amount.', 'wc-gateway-openpay' ), 'notice' );
+						wc_add_notice( __( 'Cart price is different to Openpay plan amount.', 'wc-gateway-openpay' ), 'error' );
 						if (wp_redirect( wc_get_checkout_url() )) {
 							exit;
 						}
 					}
 
                 } else {
-                    wc_add_notice( __( 'Your order has been cancelled.', 'wc-gateway-openpay' ), 'error' );
+                    wc_add_notice( __( 'Openpay transaction was cancelled. Please try again.', 'wc-gateway-openpay' ), 'error' );
 
                     //wp_delete_post( $post_id, true );
                     # Redirect back the the checkout.
@@ -405,18 +405,20 @@ if (!class_exists('WC_Gateway_Openpay')) {
 				}
 				$this->log->add( 'openpay', 'Updated min/max successfully!!' );		
 			} catch ( \Exception $e ) {
-				$this->update_option( 'auth_user' , $_POST['auth_user'] );
-				$this->update_option( 'auth_token' , $_POST['auth_token'] );
-				$this->update_option( 'payment_mode' , $_POST['payment_mode'] );
-				$this->update_option( 'region' , $_POST['region'] );
-				$result = [
-					'success' => false,
-					'auth_user' => $this->get_option( 'auth_user' ),
-					'auth_token' => $this->get_option( 'auth_token' ),
-					'payment_mode' => $this->get_option( 'payment_mode' ),
-					'region' => $this->get_option( 'region' ),
-				];
-				wp_send_json($result);
+				if ( array_key_exists('action', $_POST) && $_POST['action'] == 'openpay_minmax' ) {
+					$this->update_option( 'auth_user' , $_POST['auth_user'] );
+					$this->update_option( 'auth_token' , $_POST['auth_token'] );
+					$this->update_option( 'payment_mode' , $_POST['payment_mode'] );
+					$this->update_option( 'region' , $_POST['region'] );
+					$result = [
+						'success' => false,
+						'auth_user' => $this->get_option( 'auth_user' ),
+						'auth_token' => $this->get_option( 'auth_token' ),
+						'payment_mode' => $this->get_option( 'payment_mode' ),
+						'region' => $this->get_option( 'region' ),
+					];
+					wp_send_json($result);
+				}
 				$this->log->add( 'openpay', $e->getMessage() );
 			}
 		}
