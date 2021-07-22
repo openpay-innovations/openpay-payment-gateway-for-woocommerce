@@ -83,6 +83,11 @@ class Shopsystem
                 'line2' => $cartObj->get_customer()->get_shipping_address_2(),
             );
         }
+         if (!empty($shopCart->invoiceAddress['firstname']) && !empty($shopCart->invoiceAddress['lastname'])) {
+                 $shopCart->deliveryAddress['firstname'] = $shopCart->invoiceAddress['firstname'] ;
+                 $shopCart->deliveryAddress['lastname'] = $shopCart->invoiceAddress['lastname'] ;
+        }
+
         return $shopCart;
     }
 }

@@ -190,7 +190,8 @@ class Feature
         if (empty($object)) {
             $object = '';
         }
-        $msg = '********' . $this->section . $type . '********' . "\n";
+        $msg = date("Y-m-d H:i:s") . "\n";
+        $msg .= '********' . $this->section . $type . '********' . "\n";
         $msg .= $object . "\n";
         $msg .= '********************************' . "\n";
         file_put_contents($this->debugFile, $msg, FILE_APPEND);
