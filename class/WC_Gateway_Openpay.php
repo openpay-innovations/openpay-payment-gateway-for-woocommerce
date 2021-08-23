@@ -189,7 +189,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
 						} catch ( \Exception $e ) {
 							$this->log->add( 'openpay', $e->getMessage() ); 
 						}
-						$order->add_order_note( sprintf(__('Openpay payment approved (PlanID: %1$s)', 'wc-gateway-openpay'), $plan_id) );
+						$order->add_order_note( sprintf(__('Openpay payment approved (Plan ID: %1$s)', 'wc-gateway-openpay'), $plan_id) );
 						$transaction_id = $plan_id;
 						$order->payment_complete($transaction_id);
 						$order->update_status( 'processing', __( 'Processing Openpay payment', 'wc-gateway-openpay' ) );
@@ -327,6 +327,8 @@ if (!class_exists('WC_Gateway_Openpay')) {
 			$table_name = $wpdb->prefix . "openpay"; 
 			$token = $wpdb->get_results( "SELECT plan_id FROM $table_name WHERE order_id=$order_id" );
 			$order = wc_get_order($order_id);
+                        $newPrice = "";
+                        
 			if ( !$order->has_status( 'processing' ) ) {
                 return new WP_Error( 'error', 'Order was not paid and can not refunded' );
             }
@@ -340,12 +342,17 @@ if (!class_exists('WC_Gateway_Openpay')) {
 				'reducePriceBy'=> (int)($reduce * 100),
 				'isFullRefund' => $isFullRefund
 			];
+                        
+                        
+                        
 			try {
 				$backofficeParams = $this->getBackendParams();
 				$paymentmanager = new BusinessLayer\Openpay\PaymentManager( $backofficeParams );
 				$paymentmanager->setUrlAttributes([$token[0]->plan_id]);
             	$paymentmanager->setShopdata(null, $prices);
 				$response = $paymentmanager->refund();
+                                $newPrice = $remainingAmount;
+                                $order->add_order_note( sprintf(__('Refunded: %1$s, Openpay Plan ID: %2$s , New Purchase Price: %3$s', 'wc-gateway-openpay'), $reduce, $token[0]->plan_id, $newPrice) );
 			} catch ( \Exception $e ) {
 				$this->log->add( 'openpay', $e->getMessage() );  
 				return new WP_Error( 'error', 'SORRY! There is a problem. Please contact us.' );
