@@ -351,8 +351,12 @@ if (!class_exists('WC_Gateway_Openpay')) {
 				$paymentmanager->setUrlAttributes([$token[0]->plan_id]);
             	$paymentmanager->setShopdata(null, $prices);
 				$response = $paymentmanager->refund();
-                                $newPrice = $remainingAmount;
-                                $order->add_order_note( sprintf(__('Refunded: %1$s, Openpay Plan ID: %2$s , New Purchase Price: %3$s', 'wc-gateway-openpay'), $reduce, $token[0]->plan_id, $newPrice) );
+                                
+                                $currencySymbol = get_woocommerce_currency_symbol();
+                                $refundedAmount = $currencySymbol . "" . $reduce;
+                                $newPrice = $currencySymbol . "" . $remainingAmount;                                                               
+                                                              
+                                $order->add_order_note( sprintf(__('Refunded: %1$s, Openpay Plan ID: %2$s, New Purchase Price: %3$s', 'wc-gateway-openpay'), $refundedAmount, $token[0]->plan_id, $newPrice) );
 			} catch ( \Exception $e ) {
 				$this->log->add( 'openpay', $e->getMessage() );  
 				return new WP_Error( 'error', 'SORRY! There is a problem. Please contact us.' );
