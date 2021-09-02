@@ -205,6 +205,9 @@ class PaymentPage
             case 'Shopware6':
                 $type = 'twig';
                 break;
+            case 'Woocommerce452':
+                $type = 'twig';
+                break;
         }
         
         return $type ;

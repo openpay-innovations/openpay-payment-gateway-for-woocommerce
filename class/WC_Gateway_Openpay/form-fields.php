@@ -6,8 +6,8 @@ $this->form_fields = array(
         'type'    => 'select',
         'label'   => __( 'Active', 'wc-gateway-openpay' ),
         'options' => array(
-            'no'  => __("No"),
-            'yes'  => __("Yes"),
+            'no'  => __( "No" ),
+            'yes'  => __( "Yes" ),
 
         ),
         'default'     => __( 'options', 'No' ),
@@ -27,8 +27,8 @@ $this->form_fields = array(
         'type'    => 'select',
         'label'   => __( 'Mode', 'wc-gateway-openpay' ),
         'options' => array(
-            'test'  => __("Sandbox"),
-            'live'  => __("Production"),
+            'test'  => __( "Sandbox" ),
+            'live'  => __( "Production" ),
         ),
     ),
     'region'        => array(
@@ -52,13 +52,13 @@ $this->form_fields = array(
         'title'       => __( 'Minimum Checkout Value', 'wc-gateway-openpay' ),
         'type'        => 'text',
         'class'       => 'disabled',
-        'custom_attributes' => array('readonly' => true)
+        'custom_attributes' => array( 'readonly' => true )
     ),
     'maximum'          => array(
         'title'       => __( 'Maximum Checkout Value', 'wc-gateway-openpay' ),
         'type'        => 'text',
         'class'       => 'disabled',
-        'custom_attributes' => array('readonly' => true)
+        'custom_attributes' => array( 'readonly' => true )
     ),
     'openpay_button'  => array(
         'type'              => 'input',
@@ -71,7 +71,7 @@ $this->form_fields = array(
         'type'        => 'text',
         'default'     => 30,
         'class'       => 'disabled',
-        'custom_attributes' => array('readonly' => true)
+        'custom_attributes' => array( 'readonly' => true )
     ),
     array(
         'title'    => __( 'Disabled Categories', 'wc-gateway-openpay' ),
@@ -84,6 +84,6 @@ $this->form_fields = array(
         'title'       => __( 'Disabled Products', 'wc-gateway-openpay' ),
         'type'        => 'text',
         'description' => __( 'Add Product Ids with comma seperated.', 'wc-gateway-openpay' ),
-		'desc_tip'    => true
+        'desc_tip'    => true
     )
 );
