@@ -305,7 +305,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
             $reduce = round((float) $amount, 2);
             $prices = [
                 'newPrice' => 0,
-                'reducePriceBy' => (int) ( $reduce * 100 ),
+                'reducePriceBy' => ( $reduce * 100 ),
                 'isFullRefund' => $isFullRefund
             ];
             try {
