@@ -40,7 +40,7 @@ class Shopsystem
         $customer = $cartObj->get_customer();
         $shopCart->total = $cartObj->total;
         $integerTotal = round((float)$cartObj->total, 2);
-        $shopCart->integerTotal = (int)($integerTotal * 100);
+        $shopCart->integerTotal = ($integerTotal * 100);
         $shopCart->custom = ['email' => $cartObj->get_customer()->get_billing_email()];
 
            // checking for virtual products
