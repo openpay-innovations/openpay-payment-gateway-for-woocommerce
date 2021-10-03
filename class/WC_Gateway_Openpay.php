@@ -155,7 +155,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
                         $this->log->add('openpay', $e->getMessage());
                     }
                     $totalFromCart = WC()->cart->total;
-                    if ((int) ($totalFromCart * 100) == $purchasePrice) {
+                    if (($totalFromCart * 100) == $purchasePrice) {
                         $table_name = $wpdb->prefix . 'openpay';
                         $order = $this->create_wc_order_from_openpay($post_id);
                         $wpdb->insert($table_name, array('plan_id' => $plan_id, 'order_id' => $order->get_id()));
