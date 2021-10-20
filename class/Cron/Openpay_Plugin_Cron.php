@@ -11,7 +11,7 @@ class Openpay_Plugin_Cron
     {
         $schedules['15min'] = array(
             'interval' => 15 * 60, 
-            'display' => __( 'Every 15 minutes', 'wc-gateway-openpay' )
+            'display' => __( 'Every 15 minutes', 'openpay' )
         );
         return $schedules;
     }
@@ -60,12 +60,12 @@ class Openpay_Plugin_Cron
         $backofficeparams = $gateway->getBackendParams();
         $args = array(
             'status' => array( 'wc-pending' ),
-            'payment_method' => 'wc-gateway-openpay',
+            'payment_method' => 'openpay',
             'date_created' => '<' . strtotime( '-' . $frequency . ' minutes' )
         );
         $unpaid_orders = wc_get_orders( $args );
         $paymentmanager = new BusinessLayer\Openpay\PaymentManager( $backofficeparams );
-        $cancelled_text = __( "Order cancelled from Openpay.", "wc-gateway-openpay" );
+        $cancelled_text = __( "Order cancelled from Openpay.", "openpay" );
         foreach ( $unpaid_orders as $order ) {
             $row = $wpdb->get_results( "SELECT plan_id FROM " . $table_name . " WHERE order_id=" . $order->id );
             if ( !empty( $row ) ) {
@@ -77,16 +77,16 @@ class Openpay_Plugin_Cron
                 } catch ( \Exception $e ) { 
                     $message = $e->getMessage();
                     if ( strpos( $message, 'Error 12704' ) !== false ) {
-                        $order->update_status( 'cancelled', __( 'Cancelled Openpay payment', 'wc-gateway-openpay' ) );
+                        $order->update_status( 'cancelled', __( 'Cancelled Openpay payment', 'openpay' ) );
                         $log->add( 'openpay', 'Order cancelled for plan Id => '.$row[0]->plan_id );
                     } else {
                        $log->add( 'openpay', 'UpdateStatusJob:' . $e->getMessage() );
                     }
                 }
                 if ( $response->orderStatus == 'Approved' && $response->planStatus == 'Active' ) {
-                    $order->update_status( 'processing', __( 'Processing Openpay payment', 'wc-gateway-openpay' ) );
+                    $order->update_status( 'processing', __( 'Processing Openpay payment', 'openpay' ) );
                 } else {
-                    $order->update_status( 'cancelled', __( 'Cancelled Openpay payment', 'wc-gateway-openpay' ) );
+                    $order->update_status( 'cancelled', __( 'Cancelled Openpay payment', 'openpay' ) );
                     $log->add( 'openpay', 'Order cancelled for plan Id => '.$row[0]->plan_id );
                 }
             }
