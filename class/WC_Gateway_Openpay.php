@@ -317,13 +317,14 @@ if (!class_exists('WC_Gateway_Openpay')) {
             $isFullRefund = false;
             $table_name = $wpdb->prefix . "openpay"; 
             $token = $wpdb->get_results( "SELECT plan_id FROM $table_name WHERE order_id=$order_id" );
-            $order = wc_get_order($order_id);            
+            $order = wc_get_order($order_id);
+            $planID = "";
             
             if($token){            
-                $token = $token[0]->plan_id;
+                $planID = $token[0]->plan_id;
             } else {
                 // To refund the OLD orders placed using the XML based plugin
-                $token = get_post_meta($order_id, '_openpay_planid', true);
+                $planID = get_post_meta($order_id, '_openpay_planid', true);
             }      
 
             if ( !$order->has_status( 'processing' ) ) {
@@ -344,7 +345,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
             try {
                 $backofficeParams = $this->getBackendParams();
                 $paymentmanager = new BusinessLayer\Openpay\PaymentManager( $backofficeParams );
-                $paymentmanager->setUrlAttributes([$token]);
+                $paymentmanager->setUrlAttributes([$planID]);
                 $paymentmanager->setShopdata(null, $prices);
                 $response = $paymentmanager->refund();
                 $newPrice = "";        
@@ -352,7 +353,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
                 $refundedAmount = $currencySymbol . "" . $reduce;
                 $newPrice = $currencySymbol . "" . $remainingAmount;                                                               
 
-                $order->add_order_note( sprintf(__('Refunded: %1$s, Openpay Plan ID: %2$s, New Purchase Price: %3$s', 'openpay'), $refundedAmount, $token[0]->plan_id, $newPrice) );
+                $order->add_order_note( sprintf(__('Refunded: %1$s, Openpay Plan ID: %2$s, New Purchase Price: %3$s', 'openpay'), $refundedAmount, $planID, $newPrice) );
             } catch ( \Exception $e ) {
                 $this->log->add( 'openpay', $e->getMessage() );  
                 return new WP_Error( 'error', 'SORRY! There is a problem. Please contact us.' );
