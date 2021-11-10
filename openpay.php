@@ -3,11 +3,12 @@
 /**
  * Openpay Payment Gateway
  *
- * Provides an Openpay Payment Gateway;
+ * Openpay Payment Gateway
  * Plugin Name: Openpay Payment Gateway
  * Description: Openpay is an alternative interest-free payment method available for customers at checkout
  * Version: 1.0.0
- * Author: IDEATARMAC
+ * Author: Opy
+ * Author URI: https://opy.com
  * @class       WC_Gateway_Openpay
  * @extends     WC_Payment_Gateway
  * @version     1.0.0
@@ -69,6 +70,10 @@ if ( !class_exists( 'Openpay_Payment' ) ) {
         public static function activate_plugin()
         {
             self::init();
+            
+            // delete the old plugin entry
+            delete_option('woocommerce_openpay_settings');
+            
             Openpay_Plugin_Cron::create_jobs();
             include( 'installer.php' );
         }
