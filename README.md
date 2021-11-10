@@ -54,7 +54,7 @@ Openpay provides a test account and users for training and testing purpose.
 
 ## Already Using the OLD Openpay Payment Plugin?
 
-Before installing this plugin, please remove the OLD payment payment plugin named "Openpay Payment Method for WooCommerce" by deleting it from here: `<merchant-site-url>/wp-admin/plugins.php`
+Before installing this plugin, please remove the OLD payment payment plugin named **Openpay Payment Method for WooCommerce** by deleting it from here: `<merchant-site-url>/wp-admin/plugins.php`
 
 
 ## Installation
@@ -65,7 +65,7 @@ Log in to your WordPress admin dashboard
 
 Navigate from Dashboard to Plugins > Add New > Upload Plugin (select the downloaded file)
 
-Activate the "Openpay Payment Gateway" plugin and you are set to go ahead
+Activate the **Openpay Payment Gateway** plugin and you are set to go ahead
 
 
 ## Configuration
@@ -79,12 +79,13 @@ Navigate to WooCommerce > Settings > Payments > Openpay > Manage
 - Region: Austalia or United Kingdom
 - Openpay Username: Please enter first part of Auth Token provided by Openpay
 - Openpay Password: Please enter second part of Auth Token provided by Openpay
-- Disable Categories: Comma separated category IDs
-- Disable Products: Comma separated product IDs
+- Disabled Categories: Comma separated category IDs
+- Disabled Products: Comma separated product IDs
 
 For instance if the Auth token is "3-373|180D731A-F9C8-437B-8FC0-8341196D9CF0" then following is the username and password
 
 `Username:` 3-373
+
 `Password:` 180D731A-F9C8-437B-8FC0-8341196D9CF0
 
 - Click ‘Run Min/Max!’ to get the configured minimum and maximun checkout amounts
