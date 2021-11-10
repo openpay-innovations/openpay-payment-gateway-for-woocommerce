@@ -76,7 +76,7 @@ Navigate to WooCommerce > Settings > Payments > Openpay > Manage
 - **Title:** Openpay - Buy now, Pay Smarter
 - **Description:** Secure Payment Method (this field can be empty)
 - **Mode:** Sandbox or Production - Sandbox Mode for test purpose only
-- **Region:** Austalia or United Kingdom
+- **Region:** Australia or United Kingdom
 - **Openpay Username:** Please enter first part of Auth Token provided by Openpay
 - **Openpay Password:** Please enter second part of Auth Token provided by Openpay
 - **Disabled Categories:** Comma separated category IDs
