@@ -7,7 +7,7 @@ The Openpay plugin has been developed for Woocommerce version 4.5.2
 
 ## Install Wordpress or Woocommerce
 
-If Wordpress or Woocommerce is not already installed, following links provide step-by-step instructions to install [Wordpress] (https://wordpress.org/support/article/how-to-install-wordpress/) and [WooCommerce] (https://docs.woocommerce.com/documentation/plugins/woocommerce/getting-started/installation-and-updating/) on the website.
+If Wordpress or Woocommerce is not already installed, following links provide step-by-step instructions to install [Wordpress](https://wordpress.org/support/article/how-to-install-wordpress/) and [WooCommerce](https://docs.woocommerce.com/documentation/plugins/woocommerce/getting-started/installation-and-updating/) on the website.
 
 ## Woocommerce Documentation
 
@@ -54,7 +54,7 @@ Openpay provides a test account and users for training and testing purpose.
 
 ## Already Using the OLD Openpay Payment Plugin?
 
-Before installing this plugin, please remove the OLD payment payment plugin named "Openpay Payment Method for WooCommerce" by deleting it from here: <merchant-site-url>/wp-admin/plugins.php
+Before installing this plugin, please remove the OLD payment payment plugin named "Openpay Payment Method for WooCommerce" by deleting it from here: `<merchant-site-url>/wp-admin/plugins.php`
 
 
 ## Installation
@@ -84,8 +84,8 @@ Navigate to WooCommerce > Settings > Payments > Openpay > Manage
 
 For instance if the Auth token is "3-373|180D731A-F9C8-437B-8FC0-8341196D9CF0" then following is the username and password
 
-Username: 3-373
-Password: 180D731A-F9C8-437B-8FC0-8341196D9CF0
+`Username:` 3-373
+`Password:` 180D731A-F9C8-437B-8FC0-8341196D9CF0
 
 - Click ‘Run Min/Max!’ to get the configured minimum and maximun checkout amounts
 (Order amount should be greater than minimum and less than maximum to enable Openpay payment method on the frontend of your site.)
@@ -98,7 +98,7 @@ Orders can be partiallly or fully refunded from the `Edit order` page
 
 ## Update Plugin
 
-- Delete the `Openpay Payment Gateway` plugin from here: <merchant-site-url>/wp-admin/plugins.php
+- Delete the `Openpay Payment Gateway` plugin from here: `<merchant-site-url>/wp-admin/plugins.php`
 - Repeat the steps mentioned above in the Installation section
 
 ## Uninstallation
@@ -109,23 +109,23 @@ The Openpay plugin can be always uninstalled by clicking `Deactivate` or `Delete
 
 Openpay uses default statuses from Woocommerce.
 
-#### Pending
+## Pending
 Customer completes the Openpay plan and will be redirected to merchant website. WooCommerce order is created in `Pending` status before the plan is captured.
 
-#### Processing
+## Processing
 If Plan is successfully captured then WooCommerce order status will be changed to `Processing`. 
-Every 30 minutes cron will check the pending orders in the system that are in status `Preparation in progress` status, that will update the wooCommerce order status to `Payment accespted` if the Openpay plan status is active otherwise order will move to cancelled state in WooCommerce.
+Every 30 minutes cron will check the pending orders in the system that are in status `Preparation in progress` status, that will update the WooCommerce order status to `Processing` if the Openpay plan status is active otherwise order will move to cancelled state in WooCommerce.
 
 ### Refunded
 All the Orders with status i.e`Processing` can be partially or fully refunded in Openpay. If whole amount is refunded then order status will be changed to `Refunded`.
 
-### Canceled
+## Canceled
 Cron job will move the WooCommerce orders to `Canceled` state if the Openpay plan status is not active.
 
 
 ## Scheduled Job Test
 
-Cron can be tested manually by browsing this link - <wordpress-root-url>/wp-cron.php. All WooCommerce orders which have been paid using Openpay payment method but are in `Pending` status and are older than 30 mins will be changed to “Processing” or “Canceled” state.
+Cron can be tested manually by browsing this link - `<wordpress-root-url>/wp-cron.php`. All WooCommerce orders which have been paid using Openpay payment method but are in `Pending` status and are older than 30 mins will be changed to “Processing” or “Canceled” state.
 
 
 ## License
