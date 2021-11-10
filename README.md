@@ -110,17 +110,17 @@ The Openpay plugin can be always uninstalled by clicking `Deactivate` or `Delete
 
 Openpay uses default statuses from Woocommerce.
 
-## Pending
+#### Pending
 Customer completes the Openpay plan and will be redirected to merchant website. WooCommerce order is created in `Pending` status before the plan is captured.
 
-## Processing
+#### Processing
 If Plan is successfully captured then WooCommerce order status will be changed to `Processing`. 
 Every 30 minutes cron will check the pending orders in the system that are in status `Preparation in progress` status, that will update the WooCommerce order status to `Processing` if the Openpay plan status is active otherwise order will move to cancelled state in WooCommerce.
 
-### Refunded
+#### Refunded
 All the Orders with status i.e`Processing` can be partially or fully refunded in Openpay. If whole amount is refunded then order status will be changed to `Refunded`.
 
-## Canceled
+#### Canceled
 Cron job will move the WooCommerce orders to `Canceled` state if the Openpay plan status is not active.
 
 
