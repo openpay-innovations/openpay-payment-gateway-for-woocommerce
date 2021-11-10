@@ -5,7 +5,7 @@
 The purpose of this document is to enumerate the technical steps involved in the integration of Openpay plugin into an existing Wordpress and Woocommerce installation. 
 The Openpay plugin has been developed for Woocommerce version 4.5.2
 
-## Install Wordpress or Woocommerce
+## Install Wordpress and Woocommerce
 
 If Wordpress or Woocommerce is not already installed, following links provide step-by-step instructions to install [Wordpress](https://wordpress.org/support/article/how-to-install-wordpress/) and [WooCommerce](https://docs.woocommerce.com/documentation/plugins/woocommerce/getting-started/installation-and-updating/) on the website.
 
