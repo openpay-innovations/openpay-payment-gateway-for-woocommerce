@@ -72,15 +72,15 @@ Activate the **Openpay Payment Gateway** plugin and you are set to go ahead
 
 Navigate to WooCommerce > Settings > Payments > Openpay > Manage
 
-- Active: Yes
-- Title: Openpay - Buy now, Pay Smarter
-- Description: Secure Payment Method (this field can be empty)
-- Mode: Sandbox or Production - Sandbox Mode for test purpose only
-- Region: Austalia or United Kingdom
-- Openpay Username: Please enter first part of Auth Token provided by Openpay
-- Openpay Password: Please enter second part of Auth Token provided by Openpay
-- Disabled Categories: Comma separated category IDs
-- Disabled Products: Comma separated product IDs
+- **Active:** Yes
+- **Title:** Openpay - Buy now, Pay Smarter
+- **Description:** Secure Payment Method (this field can be empty)
+- **Mode:** Sandbox or Production - Sandbox Mode for test purpose only
+- **Region:** Austalia or United Kingdom
+- **Openpay Username:** Please enter first part of Auth Token provided by Openpay
+- **Openpay Password:** Please enter second part of Auth Token provided by Openpay
+- **Disabled Categories:** Comma separated category IDs
+- **Disabled Products:** Comma separated product IDs
 
 For instance if the Auth token is "3-373|180D731A-F9C8-437B-8FC0-8341196D9CF0" then following is the username and password
 
