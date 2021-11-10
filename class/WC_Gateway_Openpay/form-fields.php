@@ -2,9 +2,9 @@
 
 $this->form_fields = array(
     'enabled'        => array(
-        'title'   => __( 'Active', 'wc-gateway-openpay' ),
+        'title'   => __( 'Active', 'openpay' ),
         'type'    => 'select',
-        'label'   => __( 'Active', 'wc-gateway-openpay' ),
+        'label'   => __( 'Active', 'openpay' ),
         'options' => array(
             'no'  => __( "No" ),
             'yes'  => __( "Yes" ),
@@ -13,49 +13,49 @@ $this->form_fields = array(
         'default'     => __( 'options', 'No' ),
     ),
     'title'          => array(
-        'title'       => __( 'Title', 'wc-gateway-openpay' ),
+        'title'       => __( 'Title', 'openpay' ),
         'type'        => 'text',
-        'default'     => __( 'Openpay - Buy now. Pay smarter', 'wc-gateway-openpay' ),
+        'default'     => __( 'Openpay - Buy now. Pay smarter', 'openpay' ),
     ),
     'description'    => array(
-        'title'       => __( 'Description', 'wc-gateway-openpay' ),
+        'title'       => __( 'Description', 'openpay' ),
         'type'        => 'textarea',
-        'default'     => __( 'Secure Payment Method', 'wc-gateway-openpay' ),
+        'default'     => __( 'Secure Payment Method', 'openpay' ),
     ),
     'payment_mode'        => array(
-        'title'   => __( 'Mode', 'wc-gateway-openpay' ),
+        'title'   => __( 'Mode', 'openpay' ),
         'type'    => 'select',
-        'label'   => __( 'Mode', 'wc-gateway-openpay' ),
+        'label'   => __( 'Mode', 'openpay' ),
         'options' => array(
             'test'  => __( "Sandbox" ),
             'live'  => __( "Production" ),
         ),
     ),
     'region'        => array(
-        'title'   => __( 'Region', 'wc-gateway-openpay' ),
+        'title'   => __( 'Region', 'openpay' ),
         'type'    => 'select',
-        'label'   => __( 'Region', 'wc-gateway-openpay' ),
+        'label'   => __( 'Region', 'openpay' ),
         'options' => array(
-            'Au'  => __( 'Australia', 'wc-gateway-openpay' ),
-            'En'  => __( 'United Kingdom', 'wc-gateway-openpay' ),
+            'Au'  => __( 'Australia', 'openpay' ),
+            'En'  => __( 'United Kingdom', 'openpay' ),
         ),
     ),
     'auth_user' => array(
-        'title' => __( 'Openpay Username', 'wc-gateway-openpay' ),
+        'title' => __( 'Openpay Username', 'openpay' ),
         'type'  => 'text'
     ),
     'auth_token'          => array(
-        'title'       => __( 'Openpay Password', 'wc-gateway-openpay' ),
+        'title'       => __( 'Openpay Password', 'openpay' ),
         'type'        => 'text'
     ),
     'minimum'          => array(
-        'title'       => __( 'Minimum Checkout Value', 'wc-gateway-openpay' ),
+        'title'       => __( 'Minimum Checkout Value', 'openpay' ),
         'type'        => 'text',
         'class'       => 'disabled',
         'custom_attributes' => array( 'readonly' => true )
     ),
     'maximum'          => array(
-        'title'       => __( 'Maximum Checkout Value', 'wc-gateway-openpay' ),
+        'title'       => __( 'Maximum Checkout Value', 'openpay' ),
         'type'        => 'text',
         'class'       => 'disabled',
         'custom_attributes' => array( 'readonly' => true )
@@ -64,26 +64,26 @@ $this->form_fields = array(
         'type'              => 'input',
         'class'             => 'openpayajax button button-primary',
         'css'               => 'line-height: 16px;width: 150px;font-size: 15px;top: -10px;position: relative;padding:6px 12px;',
-        'default'           => __( 'Run Min/Max!', 'wc-gateway-openpay' )
+        'default'           => __( 'Run Min/Max!', 'openpay' )
     ),
     'job_frequency'          => array(
-        'title'       => __( 'Update Pending Order older than', 'wc-gateway-openpay' ),
+        'title'       => __( 'Update Pending Order older than', 'openpay' ),
         'type'        => 'text',
         'default'     => 30,
         'class'       => 'disabled',
         'custom_attributes' => array( 'readonly' => true )
     ),
     array(
-        'title'    => __( 'Disabled Categories', 'wc-gateway-openpay' ),
+        'title'    => __( 'Disabled Categories', 'openpay' ),
         'default'  => '',
         'type'     => 'multiselect',
         'class'    => 'chosen_select',
         'options'  => $this->getcategories(),
     ),
     'disable_products'          => array(
-        'title'       => __( 'Disabled Products', 'wc-gateway-openpay' ),
+        'title'       => __( 'Disabled Products', 'openpay' ),
         'type'        => 'text',
-        'description' => __( 'Add Product Ids with comma seperated.', 'wc-gateway-openpay' ),
+        'description' => __( 'Add Product Ids with comma separated.', 'openpay' ),
         'desc_tip'    => true
     )
 );

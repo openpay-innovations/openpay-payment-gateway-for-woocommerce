@@ -1,14 +1,14 @@
 jQuery( document ).ready( function( $ ) {
     $( '.openpayajax' ).click( function() {
 		$( '.responsemsg,ajax-loader' ).remove();
-        $( this ).parent().append( "<img class='ajax-loader' src='../wp-content/plugins/openpay-for-woocommerce/images/ajax-loader.gif'/>" );
+        $( this ).parent().append( "<img class='ajax-loader' src='../wp-content/plugins/opy-paymentplugin-woocommerce/images/ajax-loader.gif'/>" );
         $( this ).parent().append( "<div class='responsemsg'></div>" );
         var data = {
             'action' : 'openpay_minmax',
-            'auth_user': $( 'input[name="woocommerce_wc-gateway-openpay_auth_user"]' ).val(),
-            'auth_token': $( 'input[name="woocommerce_wc-gateway-openpay_auth_token"]' ).val(),
-            'payment_mode': $( 'select[name="woocommerce_wc-gateway-openpay_payment_mode"]' ).val(),
-            'region': $( 'select[name="woocommerce_wc-gateway-openpay_region"]' ).val() 
+            'auth_user': $( 'input[name="woocommerce_openpay_auth_user"]' ).val(),
+            'auth_token': $( 'input[name="woocommerce_openpay_auth_token"]' ).val(),
+            'payment_mode': $( 'select[name="woocommerce_openpay_payment_mode"]' ).val(),
+            'region': $( 'select[name="woocommerce_openpay_region"]' ).val() 
         };
         $.ajax({
             type : "post",
@@ -16,12 +16,12 @@ jQuery( document ).ready( function( $ ) {
             url : minMaxAjax.url,
             data : data,
             success: function( response ) {
-                $( 'input[name="woocommerce_wc-gateway-openpay_auth_user"]' ).val( response.auth_user );
-                $( 'input[name="woocommerce_wc-gateway-openpay_auth_token"]' ).val( response.auth_token );
-                $( 'select[name="woocommerce_wc-gateway-openpay_payment_mode"]' ).val( response.payment_mode );
-                $( 'select[name="woocommerce_wc-gateway-openpay_region"]' ).val( response.region );
-                $( 'input[name="woocommerce_wc-gateway-openpay_minimum"]' ).val( response.minimum );
-                $( 'input[name="woocommerce_wc-gateway-openpay_maximum"]' ).val( response.maximum );
+                $( 'input[name="woocommerce_openpay_auth_user"]' ).val( response.auth_user );
+                $( 'input[name="woocommerce_openpay_auth_token"]' ).val( response.auth_token );
+                $( 'select[name="woocommerce_openpay_payment_mode"]' ).val( response.payment_mode );
+                $( 'select[name="woocommerce_openpay_region"]' ).val( response.region );
+                $( 'input[name="woocommerce_openpay_minimum"]' ).val( response.minimum );
+                $( 'input[name="woocommerce_openpay_maximum"]' ).val( response.maximum );
                 $( '.ajax-loader' ).hide();
                 if ( response.success ) {
                     $( '.responsemsg' ).html( 'Values updated successfully!' );

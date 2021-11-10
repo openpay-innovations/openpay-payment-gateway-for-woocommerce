@@ -9,7 +9,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
 
         public function __construct() {
             $this->include_path	= dirname(__FILE__) . '/WC_Gateway_Openpay';
-            $this->id = 'wc-gateway-openpay';         
+            $this->id = 'openpay';         
 	    $this->description = $this->get_option( 'description' );
             $this->title = $this->get_option( 'title' );
             $this->method_title = "Openpay";
@@ -53,7 +53,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
             global $woocommerce;
             $data = $checkout->get_posted_data();
             $payment_method = $data['payment_method'];
-            if ( $payment_method != 'wc-gateway-openpay' ) {
+            if ( $payment_method != 'openpay' ) {
                 return;
             }
             $post_id = wp_insert_post( array(
@@ -183,10 +183,10 @@ if (!class_exists('WC_Gateway_Openpay')) {
                         } catch ( \Exception $e ) {
                             $this->log->add( 'openpay', $e->getMessage() ); 
                         }
-                        $order->add_order_note( sprintf(__('Openpay payment approved (Plan ID: %1$s)', 'wc-gateway-openpay'), $plan_id) );
+                        $order->add_order_note( sprintf(__('Openpay payment approved (Plan ID: %1$s)', 'openpay'), $plan_id) );
                         $transaction_id = $plan_id;
                         $order->payment_complete($transaction_id);
-                        $order->update_status( 'processing', __( 'Processing Openpay payment', 'wc-gateway-openpay' ) );
+                        $order->update_status( 'processing', __( 'Processing Openpay payment', 'openpay' ) );
 
                         if ( !is_wp_error($order) ) {
                             if (wp_redirect( $order->get_checkout_order_received_url() )) {
@@ -194,14 +194,14 @@ if (!class_exists('WC_Gateway_Openpay')) {
                             }
                         }
                     } else {
-                        wc_add_notice( __( 'Cart price is different to Openpay plan amount.', 'wc-gateway-openpay' ), 'error' );
+                        wc_add_notice( __( 'Cart price is different to Openpay plan amount.', 'openpay' ), 'error' );
                         if (wp_redirect( wc_get_checkout_url() )) {
                             exit;
                         }
                     }
 
                 } else {
-                    wc_add_notice( __( 'Openpay transaction was cancelled. Please try again.', 'wc-gateway-openpay' ), 'error' );
+                    wc_add_notice( __( 'Openpay transaction was cancelled. Please try again.', 'openpay' ), 'error' );
 
                     //wp_delete_post( $post_id, true );
                     # Redirect back the the checkout.
@@ -318,11 +318,20 @@ if (!class_exists('WC_Gateway_Openpay')) {
             $table_name = $wpdb->prefix . "openpay"; 
             $token = $wpdb->get_results( "SELECT plan_id FROM $table_name WHERE order_id=$order_id" );
             $order = wc_get_order($order_id);
+            $planID = "";
+            
+            if($token){            
+                $planID = $token[0]->plan_id;
+            } else {
+                // To refund the OLD orders placed using the XML based plugin
+                $planID = get_post_meta($order_id, '_openpay_planid', true);
+            }      
 
             if ( !$order->has_status( 'processing' ) ) {
-                return new WP_Error( 'error', 'Order was not paid and can not refunded' );
+                return new WP_Error( 'error', 'Order was not paid and cannot be refunded' );
             }
             $remainingAmount = $order->get_remaining_refund_amount();
+            
             if ( round($remainingAmount, 6) == 0 ) {
                 $isFullRefund = true;
             }
@@ -336,7 +345,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
             try {
                 $backofficeParams = $this->getBackendParams();
                 $paymentmanager = new BusinessLayer\Openpay\PaymentManager( $backofficeParams );
-                $paymentmanager->setUrlAttributes([$token[0]->plan_id]);
+                $paymentmanager->setUrlAttributes([$planID]);
                 $paymentmanager->setShopdata(null, $prices);
                 $response = $paymentmanager->refund();
                 $newPrice = "";        
@@ -344,7 +353,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
                 $refundedAmount = $currencySymbol . "" . $reduce;
                 $newPrice = $currencySymbol . "" . $remainingAmount;                                                               
 
-                $order->add_order_note( sprintf(__('Refunded: %1$s, Openpay Plan ID: %2$s, New Purchase Price: %3$s', 'wc-gateway-openpay'), $refundedAmount, $token[0]->plan_id, $newPrice) );
+                $order->add_order_note( sprintf(__('Refunded: %1$s, Openpay Plan ID: %2$s, New Purchase Price: %3$s', 'openpay'), $refundedAmount, $planID, $newPrice) );
             } catch ( \Exception $e ) {
                 $this->log->add( 'openpay', $e->getMessage() );  
                 return new WP_Error( 'error', 'SORRY! There is a problem. Please contact us.' );
@@ -551,12 +560,12 @@ if (!class_exists('WC_Gateway_Openpay')) {
         }
 
         public function removeConfiguration() {
-            delete_option('woocommerce_wc-gateway-openpay_settings');
+            delete_option('woocommerce_openpay_settings');
             return;
         }
 
         public function openpay_gateway_icon( $icon, $id ) {
-            if ( $id === 'wc-gateway-openpay' ) {
+            if ( $id === 'openpay' ) {
                 return '<img src="https://static.openpay.com.au/brand/logo/amber-lozenge-logo.svg" 
                 alt="Openpay Logo" style="width:80px;"/>'; 
             } else {
@@ -576,7 +585,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
             $order = wc_get_order( $order_id );
             $order_data = $order->get_data();
             $payment_method = $order_data['payment_method'];
-            if ($payment_method == 'wc-gateway-openpay') {
+            if ($payment_method == 'openpay') {
                 $order_refunds = $order->get_refunds();
                 if ( $order_refunds ) {
                     $total_refunded = 0;
