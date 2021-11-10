@@ -92,8 +92,8 @@ For instance if the Auth token is "3-373|180D731A-F9C8-437B-8FC0-8341196D9CF0" t
 (Order amount should be greater than minimum and less than maximum to enable Openpay payment method on the frontend of your site.)
 - Click ‘Save changes’ to save the settings.
 
-![Uploading opy-settings.png…](opy-settings)
-
+<img width="960" alt="opy-settings" src="https://user-images.githubusercontent.com/58763572/141085547-450485f4-7ce9-4075-9643-84544c8f6143.png">
+ 
  
 ## Refund
 
