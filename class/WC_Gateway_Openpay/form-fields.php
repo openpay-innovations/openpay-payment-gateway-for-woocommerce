@@ -83,7 +83,7 @@ $this->form_fields = array(
     'disable_products'          => array(
         'title'       => __( 'Disabled Products', 'openpay' ),
         'type'        => 'text',
-        'description' => __( 'Add Product Ids with comma separated.', 'openpay' ),
+        'description' => __( 'Add Comma Separated Product IDs.', 'openpay' ),
         'desc_tip'    => true
     )
 );
