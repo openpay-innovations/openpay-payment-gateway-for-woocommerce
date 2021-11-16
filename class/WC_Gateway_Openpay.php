@@ -17,6 +17,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
             $this->enabled = $this->get_option( 'enabled' );
             $this->max_amount = $this->get_option( 'maximum' );
             $this->min_amount = $this->get_option( 'minimum' );
+            $this->order_button_text = __('Proceed to Openpay');
             $this->supports = array( 'products','refunds' );
             $this->log = new WC_Logger();
             include "{$this->include_path}/form-fields.php";
@@ -201,7 +202,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
                     }
 
                 } else {
-                    wc_add_notice( __( 'Openpay transaction was cancelled. Please try again.', 'openpay' ), 'error' );
+                    wc_add_notice( __( 'Openpay transaction was cancelled.', 'openpay' ), 'error' );
 
                     //wp_delete_post( $post_id, true );
                     # Redirect back the the checkout.
