@@ -13,7 +13,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
 	    $this->description = $this->get_option( 'description' );
             $this->title = $this->get_option( 'title' );
             $this->method_title = "Openpay";
-            $this->method_description = " ";
+            $this->method_description = __('An alternative interest-free payment method available for customers at checkout.');            
             $this->enabled = $this->get_option( 'enabled' );
             $this->max_amount = $this->get_option( 'maximum' );
             $this->min_amount = $this->get_option( 'minimum' );
