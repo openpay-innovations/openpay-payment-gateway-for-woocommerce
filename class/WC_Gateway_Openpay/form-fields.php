@@ -15,12 +15,16 @@ $this->form_fields = array(
     'title'          => array(
         'title'       => __( 'Title', 'openpay' ),
         'type'        => 'text',
-        'default'     => __( 'Openpay - Buy now. Pay smarter', 'openpay' ),
+        'default'     => __( 'Openpay', 'openpay' ),
+        'description' => __('This controls the title which the user sees during checkout.'),
+        'desc_tip'    => true,
     ),
     'description'    => array(
         'title'       => __( 'Description', 'openpay' ),
-        'type'        => 'textarea',
-        'default'     => __( 'Secure Payment Method', 'openpay' ),
+        'description' => __('This controls the text which the user sees during checkout.'),
+        'type'        => 'text',
+        'default'     => __( '', 'openpay' ),
+        'desc_tip'    => true,
     ),
     'payment_mode'        => array(
         'title'   => __( 'Mode', 'openpay' ),
@@ -30,6 +34,8 @@ $this->form_fields = array(
             'test'  => __( "Sandbox" ),
             'live'  => __( "Production" ),
         ),
+        'description' => __( 'Use Sandbox mode to test Openpay features before going Live.'),
+        'desc_tip'    => true,
     ),
     'region'        => array(
         'title'   => __( 'Region', 'openpay' ),
@@ -83,7 +89,7 @@ $this->form_fields = array(
     'disable_products'          => array(
         'title'       => __( 'Disabled Products', 'openpay' ),
         'type'        => 'text',
-        'description' => __( 'Add Comma Separated Product IDs.', 'openpay' ),
+        'description' => __( 'Add comma separated Product IDs.', 'openpay' ),
         'desc_tip'    => true
     )
 );

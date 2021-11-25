@@ -3,9 +3,8 @@
 /**
  * Openpay Payment Gateway
  *
- * Openpay Payment Gateway
  * Plugin Name: Openpay Payment Gateway
- * Description: Openpay is an alternative interest-free payment method available for customers at checkout
+ * Description: Openpay is an alternative interest-free payment method available for customers at checkout.
  * Version: 1.1.0
  * Author: Opy
  * Author URI: https://opy.com
