@@ -23,7 +23,7 @@ $this->form_fields = array(
         'title'       => __( 'Description', 'openpay' ),
         'description' => __('This controls the text which the user sees during checkout.'),
         'type'        => 'text',
-        'default'     => __( '', 'openpay' ),
+        'default'     => __( ' - Buy now. Pay smarter.', 'openpay' ),
         'desc_tip'    => true,
     ),
     'payment_mode'        => array(
