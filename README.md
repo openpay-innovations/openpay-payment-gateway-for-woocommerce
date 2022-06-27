@@ -28,7 +28,7 @@ WooCommerce can be fully integrated with Openpay’s online payment solutions. I
 ## Integration Components
 
 Openpay integration has following plugins:
- - plugin: opy-paymentplugin-woocommerce
+ - plugin: openpay-payment-gateway
 
 ## Signing up for Openpay merchant account
 
