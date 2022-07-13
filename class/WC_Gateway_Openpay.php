@@ -147,13 +147,31 @@ if (!class_exists('WC_Gateway_Openpay')) {
         }
 
         public function reside_action() {
+            session_start();
             global $wpdb;
             if ( WC()->cart->is_empty() === false && !empty($_GET) ) {
                 $params = $_GET;
                 $status = $params['status'];
                 $plan_id = $params['planid'];
                 $post_id = $params['orderid'];
+
+                $table_name = $wpdb->prefix . 'openpay';
+
                 if ( $status == 'LODGED' ) {
+                   if ( isset($_SESSION['openpay_order_'.$plan_id]) ) {
+                       return;
+                   }
+
+                   $_SESSION['openpay_order_'.$plan_id] = true;
+
+                   // validate if the order does not exist with the same plan ID
+                   $existingOrder = $wpdb->get_results(  "SELECT plan_id FROM $table_name WHERE plan_id=$plan_id" );
+                   
+                   if(!empty($existingOrder)){
+                       unset($_SESSION['openpay_order_'.$plan_id]);                  
+                       return;
+                   }
+
                     $purchasePrice = 0;
                     $backofficeParams = $this->getBackendParams();
                     try {
@@ -163,6 +181,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
                         $purchasePrice = $response->purchasePrice;
                     } catch ( \Exception $e ) {
                         $this->log->add( 'openpay', $e->getMessage() );
+                        unset($_SESSION['openpay_order_'.$plan_id]);
                     }
                     //$totalFromCart = $this->special_decode(get_post_meta( $post_id, 'total', true ));
                     $totalFromCart = WC()->cart->total;
@@ -183,6 +202,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
                             $response = $paymentmanager->getCapture();
                         } catch ( \Exception $e ) {
                             $this->log->add( 'openpay', $e->getMessage() ); 
+                            unset($_SESSION['openpay_order_'.$plan_id]);
                         }
                         $order->add_order_note( sprintf(__('Openpay payment approved (Plan ID: %1$s)', 'openpay'), $plan_id) );
                         $transaction_id = $plan_id;
@@ -190,11 +210,13 @@ if (!class_exists('WC_Gateway_Openpay')) {
                         $order->update_status( 'processing', __( 'Processing Openpay payment', 'openpay' ) );
 
                         if ( !is_wp_error($order) ) {
+                            unset($_SESSION['openpay_order_'.$plan_id]);
                             if (wp_redirect( $order->get_checkout_order_received_url() )) {
                                 exit;
                             }
                         }
                     } else {
+                        unset($_SESSION['openpay_order_'.$plan_id]);
                         wc_add_notice( __( 'Cart price is different to Openpay plan amount.', 'openpay' ), 'error' );
                         if (wp_redirect( wc_get_checkout_url() )) {
                             exit;
@@ -203,7 +225,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
 
                 } else {
                     wc_add_notice( __( 'Openpay transaction was cancelled.', 'openpay' ), 'error' );
-
+                    unset($_SESSION['openpay_order_'.$plan_id]);
                     //wp_delete_post( $post_id, true );
                     # Redirect back the the checkout.
                     if (wp_redirect( wc_get_checkout_url() )) {
