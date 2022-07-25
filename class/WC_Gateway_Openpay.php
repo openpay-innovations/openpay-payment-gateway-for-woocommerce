@@ -155,7 +155,7 @@ if (!class_exists('WC_Gateway_Openpay')) {
                 $plan_id = $params['planid'];
                 $post_id = $params['orderid'];
 
-                $table_name = $wpdb->prefix . 'openpay';
+               // $table_name = $wpdb->prefix . 'openpay';
 
                 if ( $status == 'LODGED' ) {
                    if ( isset($_SESSION['openpay_order_'.$plan_id]) ) {
@@ -165,8 +165,10 @@ if (!class_exists('WC_Gateway_Openpay')) {
                    $_SESSION['openpay_order_'.$plan_id] = true;
 
                    // validate if the order does not exist with the same plan ID
-                   $existingOrder = $wpdb->get_results(  "SELECT plan_id FROM $table_name WHERE plan_id=$plan_id" );
-                   
+                   $existingOrder = $wpdb->get_results( 
+                        $wpdb->prepare("SELECT plan_id FROM {$wpdb->prefix}openpay WHERE plan_id=%s", $plan_id) 
+                    );
+
                    if(!empty($existingOrder)){
                        unset($_SESSION['openpay_order_'.$plan_id]);                  
                        return;
@@ -338,8 +340,12 @@ if (!class_exists('WC_Gateway_Openpay')) {
         public function process_refund( $order_id, $amount = null, $reason = '' ) {
             global $wpdb; 
             $isFullRefund = false;
-            $table_name = $wpdb->prefix . "openpay"; 
-            $token = $wpdb->get_results( "SELECT plan_id FROM $table_name WHERE order_id=$order_id" );
+        //    $table_name = $wpdb->prefix . "openpay";
+            
+            $token = $wpdb->get_results( 
+                $wpdb->prepare("SELECT plan_id FROM {$wpdb->prefix}openpay WHERE order_id=%d", $order_id) 
+             );
+            
             $order = wc_get_order($order_id);
             $planID = "";
             
@@ -589,8 +595,8 @@ if (!class_exists('WC_Gateway_Openpay')) {
 
         public function openpay_gateway_icon( $icon, $id ) {
             if ( $id === 'openpay' ) {
-                return '<img src="https://static.openpay.com.au/brand/logo/amber-lozenge-logo.svg" 
-                alt="Openpay Logo" style="width:80px;"/>'; 
+                return "<img src='" . plugin_dir_url( __FILE__ ) . "assets/amber-lozenge-logo.svg' 
+                alt='Openpay Logo' style='width:80px;'/>"; 
             } else {
                 return $icon;
             }
