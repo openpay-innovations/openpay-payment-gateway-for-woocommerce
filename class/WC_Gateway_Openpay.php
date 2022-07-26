@@ -482,20 +482,28 @@ if (!class_exists('WC_Gateway_Openpay')) {
                 $subcategories = get_term_children( (int)$categoryid, 'product_cat' );
                 $allExcludedCategiries = array_merge( $allExcludedCategiries, $subcategories );
             }
+            
             $uniqueCategories = array_unique( $allExcludedCategiries );
-            foreach ( $woocommerce->cart->cart_contents as $key => $values ) {
-                $terms = get_the_terms( $values['product_id'], 'product_cat' );
-                foreach ( $terms as $term ) {
-                    if ( in_array( $term->term_id, $uniqueCategories ) ) {
+
+            if ( isset($woocommerce->cart) && $woocommerce->cart->cart_contents ) {
+                foreach ( $woocommerce->cart->cart_contents as $key => $values ) {
+                    $terms = get_the_terms( $values['product_id'], 'product_cat' );
+                    foreach ( $terms as $term ) {
+                        if ( in_array( $term->term_id, $uniqueCategories ) ) {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            if( isset($woocommerce->cart) && $woocommerce->cart->get_cart()) {
+                foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $cart_item_values ) {
+                    if ( in_array( $cart_item_values['product_id'] , $excludedProducts ) ) {
                         return false;
                     }
                 }
             }
-            foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $cart_item_values ) {
-                if ( in_array( $cart_item_values['product_id'] , $excludedProducts ) ) {
-                    return false;
-                }
-            }
+
             return $is_available;
         }
 	
