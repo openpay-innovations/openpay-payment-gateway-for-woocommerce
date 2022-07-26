@@ -3,6 +3,7 @@
 $this->form_fields = array(
     'enabled'        => array(
         'title'   => __( 'Active', 'openpay' ),
+        'description' => __( 'Openpay method will be shown on checkout if the order total is within Minimum and Maximum values.'),
         'type'    => 'select',
         'label'   => __( 'Active', 'openpay' ),
         'options' => array(
