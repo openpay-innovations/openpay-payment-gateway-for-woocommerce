@@ -9,7 +9,7 @@ Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/
 
-Openpay is the trusted buy now, pay later solution that boosts business. Offer Openpay as an alternative payment method at checkout.
+Openpay is the trusted buy now, pay smarter solution that boosts business. Offer Openpay as an alternative payment method at checkout.
 
 == Overview ==
 

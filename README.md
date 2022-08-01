@@ -2,8 +2,7 @@
 
 ## Overview
 
-The purpose of this document is to enumerate the technical steps involved in the integration of Openpay plugin into an existing Wordpress and Woocommerce installation. 
-The Openpay plugin has been developed for Woocommerce version 4.5.2
+The purpose of this document is to enumerate the technical steps involved in the integration of Openpay plugin into an existing Wordpress and Woocommerce installation.
 
 ## Install Wordpress and Woocommerce
 
@@ -28,7 +27,7 @@ WooCommerce can be fully integrated with Openpay’s online payment solutions. I
 ## Integration Components
 
 Openpay integration has following plugins:
- - plugin: openpay-payment-gateway-for-woocommerce
+ - plugin: openpay-payment-gateway
 
 ## Signing up for Openpay merchant account
 
@@ -54,7 +53,7 @@ Openpay provides a test account and users for training and testing purpose.
 
 ## Already Using the OLD Openpay Payment Plugin?
 
-Before installing this plugin, please remove the OLD payment payment plugin named **Openpay Payment Method for WooCommerce** by deleting it from here: `<merchant-site-url>/wp-admin/plugins.php`
+Before installing this plugin, please remove the OLD payment payment plugin named **Openpay Payment Method** by deleting it from here: `<merchant-site-url>/wp-admin/plugins.php`
 
 
 ## Installation
