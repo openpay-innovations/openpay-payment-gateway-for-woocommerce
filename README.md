@@ -10,19 +10,20 @@ If Wordpress or Woocommerce is not already installed, following links provide st
 
 ## Woocommerce Documentation
 
-This link will help you familiarize yourself with [Woocommerce’s features](https://docs.woocommerce.com/)
+WooCommerce is a free to use plugin for WordPress that converts a basic WordPress site into a Multi-dimensional eCommerce platform with a wide range of features, built on open source technology.
 
+WooCommerce provides online merchants not only with a flexible shopping cart system, but also control over the look‐and‐feel of the content as well as the functionality of their online store.
+
+This link will help you familiarize yourself with [Woocommerce’s features](https://docs.woocommerce.com/)
 
 Introduction
 ---------
 
 ### What is Openpay Payment Gateway Plugin?
 
-WooCommerce is a free to use plugin for WordPress that converts a basic WordPress site into a Multi-dimensional eCommerce platform with a wide range of features, built on open source technology.
+With the official Openpay plugin for Woocommerce, users can easily offer their customers the smarter way to pay. 
 
-WooCommerce provides online merchants not only with a flexible shopping cart system, but also control over the look‐and‐feel of the content as well as the functionality of their online store.
-
-WooCommerce can be fully integrated with Openpay’s online payment solutions. Installing and configuring the Hosted Payment Solution module of Openpay provide a simple, secure and convenient option to connect with Openpay’s online payment processing platform.
+Installing and configuring the Openpay plugin provide a simple, secure and convenient option to connect with Openpay’s online payment processing platform.
 
 ## Integration Components
 
