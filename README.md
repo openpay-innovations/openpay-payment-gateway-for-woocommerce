@@ -12,7 +12,7 @@ If Wordpress or Woocommerce is not already installed, following links provide st
 
 WooCommerce is a free to use plugin for WordPress that converts a basic WordPress site into a Multi-dimensional eCommerce platform with a wide range of features, built on open source technology.
 
-WooCommerce provides online merchants not only with a flexible shopping cart system, but also control over the look‐and‐feel of the content as well as the functionality of their online store.
+WooCommerce provides online merchants not only with a flexible shopping cart system, but also gives control over the look‐and‐feel of the content as well as the functionality of their online store.
 
 This link will help you familiarize yourself with [Woocommerce’s features](https://docs.woocommerce.com/)
 
@@ -23,7 +23,7 @@ Introduction
 
 With the official Openpay plugin for Woocommerce, users can easily offer their customers the smarter way to pay. 
 
-Installing and configuring the Openpay plugin provide a simple, secure and convenient option to connect with Openpay’s online payment processing platform.
+Installing and configuring the Openpay plugin provides a simple, secure and convenient option to connect with Openpay’s online payment processing platform.
 
 ## Integration Components
 
