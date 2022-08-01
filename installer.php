@@ -4,7 +4,7 @@ $table_name = $wpdb->prefix . "openpay";
 $openpay_db_version = '1.0.0';
 $charset_collate = $wpdb->get_charset_collate();
 
-if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) != $table_name ) {
+if ( $wpdb->get_var( $wpdb->prepare("SELECT TABLES LIKE {$wpdb->prefix}openpay") ) != $table_name ) {
 
     $sql = "CREATE TABLE $table_name (
             id int(9) NOT NULL AUTO_INCREMENT,

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Openpay Payment Gateway for WooCommerce
+ * Plugin Name: Openpay Payment Gateway
  * Description: Openpay is an alternative interest-free payment method available for customers at checkout.
  * Version: 1.1.0
  * Author: Openpay

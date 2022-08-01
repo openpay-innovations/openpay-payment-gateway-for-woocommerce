@@ -1,7 +1,7 @@
 jQuery( document ).ready( function( $ ) {
     $( '.openpayajax' ).click( function() {
 		$( '.responsemsg,ajax-loader' ).remove();
-        $( this ).parent().append( "<img class='ajax-loader' src='../wp-content/plugins/openpay-payment-gateway-for-woocommerce/images/ajax-loader.gif'/>" );
+        $( this ).parent().append( "<img class='ajax-loader' src='../wp-content/plugins/openpay-payment-gateway/images/ajax-loader.gif'/>" );
         $( this ).parent().append( "<div class='responsemsg'></div>" );
         var data = {
             'action' : 'openpay_minmax',

@@ -54,7 +54,7 @@ class Openpay_Plugin_Cron
     {
         global $wpdb;
         $log = new WC_Logger();
-        $table_name = $wpdb->prefix . "openpay"; 
+        //$table_name = $wpdb->prefix . "openpay"; 
         $gateway = WC_Gateway_Openpay::getInstance();
         $frequency = $gateway->get_option( 'job_frequency' );
         $backofficeparams = $gateway->getBackendParams();
@@ -67,7 +67,9 @@ class Openpay_Plugin_Cron
         $paymentmanager = new BusinessLayer\Openpay\PaymentManager( $backofficeparams );
         $cancelled_text = __( "Order cancelled from Openpay.", "openpay" );
         foreach ( $unpaid_orders as $order ) {
-            $row = $wpdb->get_results( "SELECT plan_id FROM " . $table_name . " WHERE order_id=" . $order->id );
+            $row = $wpdb->get_results( 
+                $wpdb->prepare("SELECT plan_id FROM {$wpdb->prefix}openpay WHERE order_id=%d", $order->id)                
+            );
             if ( !empty( $row ) ) {
                 try {
                     /** @var $paymentmanager \BusinessLayer\Openpay\PaymentManager */
